@@ -26,7 +26,7 @@ function package_every_individual_subproject() {
   subprojects=( $arithmeticsArtifactId $stringhelperArtifactId )
   for i in "${subprojects[@]}"
   do
-    if [[ ! -d $basedir/$i ]]; then
+    if [[ -d $basedir/$i ]]; then
       echo "Packaging subproject $i"
       cd $basedir/$i && mvn package -DskipTests 
   fi
@@ -36,14 +36,14 @@ function package_every_individual_subproject() {
 function exec_arithmetics() {
   if [[ -d $basedir/$arithmeticsArtifactId ]]; then
     echo "Executing subproject $arithmeticsArtifactId"
-    cd $basedir/$arithmeticsArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
+    cd $basedir/$arithmeticsArtifactId && mvn exec:java -Dexec.mainClass="$groupId.ArithmeticsApp" #-Dexec.args="argument1" ...
   fi
 }
 
 function exec_stringhelper() {
-  if [[ ! -d $basedir/$stringhelperArtifactId ]]; then
+  if [[ -d $basedir/$stringhelperArtifactId ]]; then
     echo "Executing subproject $stringhelperArtifactId"
-    cd $basedir/$stringhelperArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
+    cd $basedir/$stringhelperArtifactId && mvn exec:java -Dexec.mainClass="$groupId.StringHelperApp" #-Dexec.args="argument1" ...
   fi
 }
 
