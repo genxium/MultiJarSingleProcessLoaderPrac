@@ -13,18 +13,24 @@ groupId=com.mycompany.app
 archetypeArtifactId=maven-archetype-quickstart
 archetypeVersion=1.4
 
+hybridArtifactId=hybrid
 arithmeticsArtifactId=arithmetics
 stringhelperArtifactId=stringhelper
 
-function package_all() {
-  if [[ -d $basedir/$arithmeticsArtifactId ]]; then
-    echo "Packaging subproject $arithmeticsArtifactId"
-    cd $basedir/$arithmeticsArtifactId && mvn package
+function package_wrapped_hybrid() {
+  echo "Packaging the wrapped hybrid"
+  cd $basedir && mvn package -DskipTests
+}
+
+function package_every_individual_subproject() {
+  subprojects=( $arithmeticsArtifactId $stringhelperArtifactId )
+  for i in "${subprojects[@]}"
+  do
+    if [[ ! -d $basedir/$i ]]; then
+      echo "Packaging subproject $i"
+      cd $basedir/$i && mvn package -DskipTests 
   fi
-  if [[ ! -d $basedir/$stringhelperArtifactId ]]; then
-    echo "Packaging subproject $stringhelperArtifactId"
-    cd $basedir/$stringhelperArtifactId && mvn package
-  fi
+  done
 }
 
 function exec_arithmetics() {
@@ -42,14 +48,16 @@ function exec_stringhelper() {
 }
 
 function create_subprojects () {
-  if [[ ! -d $basedir/$arithmeticsArtifactId ]]; then
-    echo "Creating subproject $arithmeticsArtifactId"
-    cd $basedir && mvn -X archetype:generate -DgroupId=$groupId -DartifactId=$arithmeticsArtifactId -DarchetypeArtifactId=$archetypeArtifactId -DarchetypeVersion=$archetypeVersion -DinteractiveMode=false
-  fi
-  if [[ ! -d $basedir/$stringhelperArtifactId ]]; then
-    echo "Creating subproject $stringhelperArtifactId"
-    cd $basedir && mvn -X archetype:generate -DgroupId=$groupId -DartifactId=$stringhelperArtifactId -DarchetypeArtifactId=$archetypeArtifactId -DarchetypeVersion=$archetypeVersion -DinteractiveMode=false
-  fi
+  subprojects=( $hybridArtifactId $arithmeticsArtifactId $stringhelperArtifactId )
+  for i in "${subprojects[@]}"
+  do
+    if [[ ! -d $basedir/$i ]]; then
+      echo "Creating subproject $i"
+      cd $basedir && mvn -X archetype:generate -DgroupId=$groupId -DartifactId=$i -DarchetypeArtifactId=$archetypeArtifactId -DarchetypeVersion=$archetypeVersion -DinteractiveMode=false
+    fi
+    cp $basedir/pom-file-templates/$i-pom.xml $basedir/$i/pom.xml 
+  done
+  cp $basedir/pom-file-templates/root-pom.xml $basedir/pom.xml 
 }
 
 operationCode=$1

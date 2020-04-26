@@ -1,0 +1,1 @@
+Templates under this directory are created for a "minimalist pursuit" rather than an "enterprise considerate requirement". See http://maven.apache.org/guides/introduction/introduction-to-the-pom.html for fundamental concepts.
