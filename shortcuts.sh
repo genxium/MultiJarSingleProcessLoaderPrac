@@ -33,6 +33,13 @@ function package_every_individual_subproject() {
   done
 }
 
+function exec_hybrid() {
+  if [[ -d $basedir/$hybridArtifactId ]]; then
+    echo "Executing hybrid"
+    cd $basedir/$hybridArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
+  fi
+}
+
 function exec_arithmetics() {
   if [[ -d $basedir/$arithmeticsArtifactId ]]; then
     echo "Executing subproject $arithmeticsArtifactId"
