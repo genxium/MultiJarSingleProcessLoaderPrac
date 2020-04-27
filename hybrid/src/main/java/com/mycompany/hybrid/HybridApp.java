@@ -60,11 +60,21 @@ public class HybridApp {
         System.out.println("Hello hybrid!");
         class ArithmeticsAppRunnable implements Runnable {
             public void run() {
+                com.mycompany.arithmetics.app.App.main(args);
             }
         }
         final ArithmeticsAppRunnable r1 = new ArithmeticsAppRunnable();
         final Thread t1 = new Thread(r1);
         t1.start();
+
+        class StringhelperAppRunnable implements Runnable {
+            public void run() {
+                com.mycompany.stringhelper.app.App.main(args);
+            }
+        }
+        final StringhelperAppRunnable r2 = new StringhelperAppRunnable();
+        final Thread t2 = new Thread(r2);
+        t2.start();
         synchronized (lock) {
             try {
                 lock.wait();

@@ -24,7 +24,7 @@ function package_every_individual_subproject() {
   do
     if [[ -d $basedir/$i ]]; then
       echo "Packaging subproject $i"
-      cd $basedir/$i && mvn package -DskipTests
+      cd $basedir/$i && mvn clean package -DskipTests
       echo "Deploying built target of subproject $i"
       # A "$basedir/snapshot-repo" is used in this project to avoid installing experimental jars into the OS-scope maven repo, e.g. $HOME/.m2/repository. 
       cd $basedir/$i && mvn deploy -DskipTests 
@@ -35,7 +35,7 @@ function package_every_individual_subproject() {
 function package_wrapped_hybrid() {
   package_every_individual_subproject
   echo "Packaging the wrapped hybrid"
-  cd $basedir && mvn package -DskipTests
+  cd $basedir && mvn clean package -DskipTests
 }
 
 
@@ -48,15 +48,15 @@ function exec_hybrid() {
 
 function exec_arithmetics() {
   if [[ -d $basedir/$arithmeticsArtifactId ]]; then
-    echo "Executing subproject $arithmeticsArtifactId"
-    cd $basedir/$arithmeticsArtifactId && mvn exec:java -Dexec.mainClass="$groupId.ArithmeticsApp" #-Dexec.args="argument1" ...
+    echo "Executing subproject $arithmeticsArtifactId (NOT shaded)"
+    cd $basedir/$arithmeticsArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
   fi
 }
 
 function exec_stringhelper() {
   if [[ -d $basedir/$stringhelperArtifactId ]]; then
-    echo "Executing subproject $stringhelperArtifactId"
-    cd $basedir/$stringhelperArtifactId && mvn exec:java -Dexec.mainClass="$groupId.StringhelperApp" #-Dexec.args="argument1" ...
+    echo "Executing subproject $stringhelperArtifactId (NOT shaded)"
+    cd $basedir/$stringhelperArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
   fi
 }
 
