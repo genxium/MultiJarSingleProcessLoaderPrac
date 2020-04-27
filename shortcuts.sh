@@ -27,7 +27,7 @@ function package_every_individual_subproject() {
       cd $basedir/$i && mvn package -DskipTests
       echo "Deploying built target of subproject $i"
       # A "$basedir/snapshot-repo" is used in this project to avoid installing experimental jars into the OS-scope maven repo, e.g. $HOME/.m2/repository. 
-      cd $basedir/$i && mvn deploy -DskipTests
+      cd $basedir/$i && mvn deploy -DskipTests 
   fi
   done
 }
@@ -49,14 +49,14 @@ function exec_hybrid() {
 function exec_arithmetics() {
   if [[ -d $basedir/$arithmeticsArtifactId ]]; then
     echo "Executing subproject $arithmeticsArtifactId"
-    cd $basedir/$arithmeticsArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
+    cd $basedir/$arithmeticsArtifactId && mvn exec:java -Dexec.mainClass="$groupId.ArithmeticsApp" #-Dexec.args="argument1" ...
   fi
 }
 
 function exec_stringhelper() {
   if [[ -d $basedir/$stringhelperArtifactId ]]; then
     echo "Executing subproject $stringhelperArtifactId"
-    cd $basedir/$stringhelperArtifactId && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
+    cd $basedir/$stringhelperArtifactId && mvn exec:java -Dexec.mainClass="$groupId.StringhelperApp" #-Dexec.args="argument1" ...
   fi
 }
 

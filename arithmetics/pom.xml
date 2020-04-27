@@ -16,6 +16,13 @@
   <name>arithmetics</name>
   <packaging>jar</packaging>
 
+  <distributionManagement>
+    <repository>
+      <id>snapshot-repo</id>
+      <url>file:///${project.basedir}/../snapshot-repo</url>
+    </repository>
+  </distributionManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.springframework</groupId>
@@ -34,12 +41,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <distributionManagement>
-    <repository>
-      <id>snapshot-repo</id>
-      <url>file:///${project.basedir}/../snapshot-repo</url>
-    </repository>
-  </distributionManagement>
 
 </project>
