@@ -1,7 +1,7 @@
 package com.mycompany.app;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class StringHelperApp
+public class App
 {
     final private static Object lock = new Object();
     public static void main( String[] args )
