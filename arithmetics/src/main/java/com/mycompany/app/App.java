@@ -2,11 +2,12 @@ package com.mycompany.app;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-public class ArithmeticsApp {
+public class App {
     final private static Object lock = new Object();
+
     public static void main(String[] args) {
         final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        final ArithmeticsLib libIns = (ArithmeticsLib) ctx.getBean("lib");
+        final Lib libIns = (Lib) ctx.getBean("lib");
         final int plusResult = libIns.plus(1, 2);
         System.out.println("Hello arithmetics! Plus result is " + plusResult);
         ctx.refresh();
