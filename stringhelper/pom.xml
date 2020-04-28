@@ -67,7 +67,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <file>${project.basedir}/target/classes/applicationContext.xml</file>
+                            <file>${project.basedir}/target/classes/applicationContext-stringhelper.xml</file>
                             <replacements>
                                 <replacement>
                                     <token>com.mycompany.app</token>

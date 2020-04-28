@@ -12,15 +12,15 @@ public class App {
     final private static Object lock = new Object();
 
     public static void main(String[] args) {
-        final InputStream inputStream = App.class.getResourceAsStream("/applicationContext.xml");
+        final InputStream inputStream = App.class.getResourceAsStream("/applicationContext-stringhelper.xml");
         final InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         final String content = new BufferedReader(streamReader).lines().collect(Collectors.joining("\n"));
-        System.out.println("Hello stringhelper! The content of `applicationContext.xml` is \n" + content);
+        System.out.println("Hello stringhelper! The content of `applicationContext-stringhelper.xml` is \n" + content);
 
-        final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext-stringhelper.xml");
         ctx.refresh();
         ctx.start();
-        System.out.println("Hello stringhelper! ctx.getId() is " + ctx.getId() + ", ctx.getBeanFactory().hashCode() is " + ctx.getBeanFactory().hashCode());
+        // System.out.println("Hello stringhelper! ctx.getId() is " + ctx.getId() + ", ctx.getBeanFactory().hashCode() is " + ctx.getBeanFactory().hashCode());
         final Lib libIns = (Lib) ctx.getBean("lib");
 
         final String reversedStr = libIns.reverse("foobar");
