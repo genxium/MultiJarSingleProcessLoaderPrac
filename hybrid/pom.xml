@@ -28,14 +28,12 @@
             <artifactId>arithmetics</artifactId>
             <version>${project.version}</version>
             <classifier>shaded</classifier>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>com.mycompany.app</groupId>
             <artifactId>stringhelper</artifactId>
             <version>${project.version}</version>
             <classifier>shaded</classifier>
-            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

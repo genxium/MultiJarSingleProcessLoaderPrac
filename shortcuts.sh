@@ -18,20 +18,29 @@ hybridArtifactId=hybrid
 arithmeticsArtifactId=arithmetics
 stringhelperArtifactId=stringhelper
 
-function package_wrapped_hybrid() {
+function package_every_subproject_individually() {
   subprojects=( $arithmeticsArtifactId $stringhelperArtifactId )
   for i in "${subprojects[@]}"
   do
     if [[ -d $basedir/$i ]]; then
       echo "Packaging subproject $i"
-      cd $basedir/$i && mvn clean -DskipTests && mvn package -DskipTests -P shading
-      echo "Deploying built target of subproject $i"
-      # A "$basedir/snapshot-repo" is used in this project to avoid installing experimental jars into the OS-scope maven repo, e.g. $HOME/.m2/repository. 
-      cd $basedir/$i && mvn deploy -DskipTests 
+      cd $basedir/$i && mvn clean -DskipTests && mvn package -DskipTests
   fi
   done
+}
+
+function package_wrapped_hybrid() {
   echo "Packaging the wrapped hybrid"
-  cd $basedir && mvn clean -DskipTests && mvn package -DskipTests # Won't re-package "$subprojects" because of "<dependency> ... <scope>runtime</scope> ... </dependency>" 
+  cd $basedir && mvn clean -DskipTests && mvn package -DskipTests -P shading 
+  subprojects=( $arithmeticsArtifactId $stringhelperArtifactId )
+  for i in "${subprojects[@]}"
+  do
+    if [[ -d $basedir/$i ]]; then
+      echo "Deploying built target of subproject $i (shaded)"
+      # A "$basedir/snapshot-repo" is used in this project to avoid installing experimental jars into the OS-scope maven repo, e.g. $HOME/.m2/repository. 
+      cd $basedir/$i && mvn deploy -DskipTests -P shading 
+  fi
+  done
 }
 
 function exec_hybrid() {
