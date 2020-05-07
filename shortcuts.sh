@@ -25,7 +25,7 @@ function package_every_subproject_individually() {
     if [[ -d $basedir/$i ]]; then
       echo "Packaging subproject $i"
       cd $basedir/$i && mvn clean -DskipTests && mvn package -DskipTests
-  fi
+    fi
   done
 }
 
@@ -39,7 +39,7 @@ function package_wrapped_hybrid() {
       echo "Deploying built target of subproject $i (shaded)"
       # A "$basedir/snapshot-repo" is used in this project to avoid installing experimental jars into the OS-scope maven repo, e.g. $HOME/.m2/repository. 
       cd $basedir/$i && mvn deploy -DskipTests -P shading 
-  fi
+    fi
   done
 }
 
