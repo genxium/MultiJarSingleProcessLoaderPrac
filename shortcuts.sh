@@ -31,7 +31,6 @@ function package_every_subproject_individually() {
 
 function package_wrapped_hybrid() {
   echo "Packaging the wrapped hybrid"
-  cd $basedir && mvn clean -DskipTests && mvn package -DskipTests -P shading 
   subprojects=( $arithmeticsArtifactId $stringhelperArtifactId )
   for i in "${subprojects[@]}"
   do
@@ -41,6 +40,7 @@ function package_wrapped_hybrid() {
       cd $basedir/$i && mvn deploy -DskipTests -P shading 
     fi
   done
+  cd $basedir && mvn clean -DskipTests && mvn package -DskipTests -P shading 
 }
 
 function exec_hybrid() {
