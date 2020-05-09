@@ -46,7 +46,7 @@ function package_wrapped_hybrid() {
 function exec_hybrid() {
   if [[ -d $basedir/$hybridArtifactId ]]; then
     echo "Executing hybrid"
-    cd $basedir/$hybridArtifactId && mvn exec:java -Dexec.mainClass="$hybridGroupId.HybridApp" #-Dexec.args="argument1" ...
+    cd $basedir/$hybridArtifactId/target && java -jar hybrid-1.0-SNAPSHOT.jar 
   fi
 }
 

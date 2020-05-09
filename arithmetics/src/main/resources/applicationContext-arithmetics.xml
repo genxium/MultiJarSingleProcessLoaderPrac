@@ -1,7 +1,28 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
-       default-lazy-init="false">
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <!-- provider's application name, used for tracing dependency relationship -->
+    <dubbo:application name="high-school-math-provider" />
+
     <bean id="lib" class="com.mycompany.app.Lib" />
+
+    <!-- service implementation, as same as regular local bean -->
+    <bean id="highSchoolMathService" class="com.mycompany.serviceimpl.HighSchoolMathServiceImpl"/>
+
+    <!--
+        Use multicast registry center to export service,
+        the "multicast" address space should comply with the specs
+        in https://www.iana.org/assignments/multicast-addresses/multicast-addresses.xhtml.
+    -->
+    <dubbo:registry address="multicast://224.5.6.7:1234"/>
+
+    <dubbo:protocol name="dubbo" />
+
+    <!-- declare the service interface to be exported -->
+    <dubbo:service interface="com.mycompany.service.HighSchoolMathService" ref="highSchoolMathService"/>
 </beans>
