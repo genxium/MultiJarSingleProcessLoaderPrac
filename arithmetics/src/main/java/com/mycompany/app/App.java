@@ -1,5 +1,6 @@
 package com.mycompany.app;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.BufferedReader;
@@ -22,6 +23,7 @@ public class App {
          *
          * -- YFLu, 2020-04-28
          */
+
         final InputStream inputStream = App.class.getResourceAsStream("/applicationContext-arithmetics.xml");
         final InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         final String content = new BufferedReader(streamReader).lines().collect(Collectors.joining("\n"));

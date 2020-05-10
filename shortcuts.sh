@@ -53,7 +53,7 @@ function exec_hybrid() {
 function exec_arithmetics() {
   if [[ -d $basedir/$arithmeticsArtifactId ]]; then
     echo "Executing subproject $arithmeticsArtifactId (NOT shaded)"
-    cd $basedir/$arithmeticsArtifactId && mvn clean package -DskipTests && mvn exec:java -Dexec.mainClass="$groupId.App" #-Dexec.args="argument1" ...
+    cd $basedir/$arithmeticsArtifactId && mvn clean package -DskipTests && cd $basedir/$arithmeticsArtifactId/target && java -jar arithmetics-1.0-SNAPSHOT.jar
   fi
 }
 

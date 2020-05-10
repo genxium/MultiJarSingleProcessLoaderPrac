@@ -2,17 +2,16 @@
 
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
 
     <!-- provider's application name, used for tracing dependency relationship -->
     <dubbo:application name="high-school-math-provider" />
 
     <bean id="lib" class="com.mycompany.app.Lib" />
-
-    <!-- service implementation, as same as regular local bean -->
-    <bean id="highSchoolMathService" class="com.mycompany.serviceimpl.HighSchoolMathServiceImpl"/>
 
     <!--
         Use multicast registry center to export service,
@@ -24,5 +23,16 @@
     <dubbo:protocol name="dubbo" />
 
     <!-- declare the service interface to be exported -->
-    <dubbo:service interface="com.mycompany.service.HighSchoolMathService" ref="highSchoolMathService"/>
+    <!--
+        Note that the "<dubbo:service ... ref=... />" seeks a "bean" in the "current spring context".
+
+        You should activate ONE OF THE FOLLOWING TWO lines to expose "highSchoolMathServiceImpl" for the referencing demand.
+
+        - <bean id="highSchoolMathServiceImpl" class="com.mycompany.serviceimpl.HighSchoolMathServiceImpl" />
+            ~ This explicitly defines a named bean in the "current spring context".
+        - <context:component-scan base-package="com.mycompany.serviceimpl" />
+            ~ This reads all "@Service" annotated singletons under package "com.mycompany.serviceimpl" into the "current spring context".
+    -->
+    <context:component-scan base-package="com.mycompany.serviceimpl" />
+    <dubbo:service interface="com.mycompany.service.HighSchoolMathService" ref="highSchoolMathServiceImpl"/>
 </beans>
