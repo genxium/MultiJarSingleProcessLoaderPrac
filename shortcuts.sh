@@ -46,14 +46,14 @@ function package_wrapped_hybrid() {
 function exec_hybrid() {
   if [[ -d $basedir/$hybridArtifactId ]]; then
     echo "Executing hybrid"
-    cd $basedir/$hybridArtifactId/target && java -jar hybrid-1.0-SNAPSHOT.jar 
+    cd $basedir/$hybridArtifactId/target && java -jar hybrid.jar 
   fi
 }
 
 function exec_arithmetics() {
   if [[ -d $basedir/$arithmeticsArtifactId ]]; then
     echo "Executing subproject $arithmeticsArtifactId (NOT shaded)"
-    cd $basedir/$arithmeticsArtifactId && mvn clean package -DskipTests && cd $basedir/$arithmeticsArtifactId/target && java -jar arithmetics-1.0-SNAPSHOT.jar
+    cd $basedir/$arithmeticsArtifactId && mvn clean package -DskipTests && cd $basedir/$arithmeticsArtifactId/target && java -jar arithmetics.jar
   fi
 }
 

@@ -44,6 +44,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -75,6 +76,12 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>com.mycompany.hybrid.HybridApp</mainClass>
+                            <!--
+                                The "<useUniqueVersions> == false" option avoids that "SNAPSHOT" being converted
+                                to a timestamp in "hybrid.jar/META-INF/MANIFEST.MF" file, thus creating an inconsistency
+                                from the "lib/*-SNAPSHOT-*.jar" filenames.
+                            -->
+                            <useUniqueVersions>false</useUniqueVersions>
                         </manifest>
                     </archive>
                 </configuration>
