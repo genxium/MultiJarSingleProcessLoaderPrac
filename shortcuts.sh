@@ -17,6 +17,7 @@ archetypeVersion=1.4
 hybridArtifactId=hybrid
 arithmeticsArtifactId=arithmetics
 stringhelperArtifactId=stringhelper
+launcherArtifactId=launcher
 
 function package_every_subproject_individually() {
   subprojects=( $arithmeticsArtifactId $stringhelperArtifactId )
@@ -81,6 +82,14 @@ function create_subprojects () {
   cp $basedir/pom-file-templates/$hybridArtifactId-pom.xml $basedir/$hybridArtifactId/pom.xml 
 
   cp $basedir/pom-file-templates/root-pom.xml $basedir/pom.xml 
+}
+
+function create_launcher_subproject() {
+  if [[ ! -d $basedir/$launcherArtifactId ]]; then
+    echo "Creating subproject $i"
+    cd $basedir && mvn -X archetype:generate -DgroupId=$groupId -DartifactId=$launcherArtifactId -DarchetypeArtifactId=$archetypeArtifactId -DarchetypeVersion=$archetypeVersion -DinteractiveMode=false
+  fi
+  cp $basedir/pom-file-templates/$launcherArtifactId-pom.xml $basedir/$launcherArtifactId/pom.xml 
 }
 
 operationCode=$1
